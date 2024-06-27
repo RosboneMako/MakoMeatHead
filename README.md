@@ -21,7 +21,7 @@ SUMMARY
 ------------------------------------------------------------------
 A Juce/C++ VST written to simulate a guitar amplifier. 
 
-![Demo Image](docs/assets/meatheaddemo.png)
+![Demo Image](docs/assets/meatheaddemo.jpg)
 
 # THEORY OF OPERATION<br />
 This VST is designed to mimic a high gain amplifier. It uses
