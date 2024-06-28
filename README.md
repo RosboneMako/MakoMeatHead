@@ -148,7 +148,22 @@ juce::Path pathKnob;
  }
  pathKnob.closeSubPath();
 ```
+The knob coordinates were based on a circle size of 10. Using a circle of 1 or unity, would make the scaling easier. Too late we got 10.
 
+Now we can draw a weird knob shape. 
+```C++
+//R1.00 Copy our predefined KNOB PATH, scale it, and then transform it to the centre position.
+//R1.00 The knob SIZE must be performed first. It is then ROTATED around its center. Then moved (TRANSLATED) to the screen knob position.
+juce::Path pK = pathKnob;
+pK.applyTransform(juce::AffineTransform::scale(radius / 11.0f).followedBy(juce::AffineTransform::rotation(angle).translated(centreX, centreY)));
+ColGrad = juce::ColourGradient(juce::Colour(0xFFC0C0C0), 0.0f, y, juce::Colour(0xFF000000), 0.0f, y + height, false);
+g.setGradientFill(ColGrad);
+g.strokePath(pK, juce::PathStrokeType(2.0f));
+```
+We are scaling our knobs by 11 (circle is based on 10) to make the knobs a little smaller than normal. 
+We then apply a rotation to the coordinates of the path. Followed by a translation (centering the knob in its position).
+This part only draws the outline of the knob, it does not fill it in. The color used is a gradient starting at a lite grey fading to black. 
+The path is drawn with strokeParth and is set to be 2 pixels wide.
 
 
 
