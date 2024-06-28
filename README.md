@@ -77,3 +77,19 @@ CUSTOM SLIDER UI
 We have an override function declared to take control of the drawing routines for our sliders. Each slider also has a few tick mark settings available. We are cheating and using
 some of the sliders color properties to get info about our slider that doesnt exist in the default JUCE control. For instance a slider color is used to indicate the tick mark style to use.
 
+# CUSTOM SLIDER OVERVIEW  
+Juce hs built in functions to draw the slider objects you use. The power of C++ lets us copy the slider object and then take control of the prebuilt functions. 
+To do this we need to declare our own Slider Object that pulls its defintion from the Juce object. This is done in the top of PluginEditor.h.
+```C++
+class MakoLookAndFeel : public juce::LookAndFeel_V4
+```  
+This creates OUR own slider class. Now we need to tell C++ to use our fnctions instead of the Juce defined functions. This is done by replicating the function and using the OVERRIDE statement.
+```C++
+void drawRotarySlider(juce::Graphics& g, int x, int y, int width, int height, float sliderPos, const float rotaryStartAngle, const float rotaryEndAngle, juce::Slider& sld) override
+{
+}
+```
+
+
+
+
