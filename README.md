@@ -178,7 +178,7 @@ We then need to override the actual function so that our function gets called in
 //R1.00 Override the TIMER so we can capture it and executes our UI code.
 void timerCallback() override;
 ```
-We then tell the editor how often to call our timer. In this case we set it to be clalled twice a second. More than often enough for our simple CLIPPING warning.
+Next we tell the editor how often to call our timer. In this case we set it to be called twice a second. More than often enough for our simple CLIPPING warning.
 If you were making a VU meter, etc you may want this to be set to 10 or more. Remember, this is all wasting your CPU usage while you are trying to record in the DAW. 
 So try to keep it to a minimum. 
 ```C++
