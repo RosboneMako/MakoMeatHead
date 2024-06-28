@@ -78,16 +78,75 @@ We have an override function declared to take control of the drawing routines fo
 some of the sliders color properties to get info about our slider that doesnt exist in the default JUCE control. For instance a slider color is used to indicate the tick mark style to use.
 
 # CUSTOM SLIDER OVERVIEW  
-Juce hs built in functions to draw the slider objects you use. The power of C++ lets us copy the slider object and then take control of the prebuilt functions. 
+Juce has built in functions to draw the slider objects you use. The power of C++ lets us copy the slider object and then take control of the prebuilt functions. 
 To do this we need to declare our own Slider Object that pulls its defintion from the Juce object. This is done in the top of PluginEditor.h.
 ```C++
 class MakoLookAndFeel : public juce::LookAndFeel_V4
 ```  
-This creates OUR own slider class. Now we need to tell C++ to use our fnctions instead of the Juce defined functions. This is done by replicating the function and using the OVERRIDE statement.
+This creates OUR own slider class. Now we need to tell C++ to use our functions instead of the Juce defined functions. This is done by replicating the function and using the OVERRIDE statement.
 ```C++
 void drawRotarySlider(juce::Graphics& g, int x, int y, int width, int height, float sliderPos, const float rotaryStartAngle, const float rotaryEndAngle, juce::Slider& sld) override
 {
 }
+```
+In order to use this new class, we need to declare it as a variable in PlugInEditor.h:
+```C++
+MakoLookAndFeel myLookAndFeel;
+```
+The next step is to tell Juce to use our class instead of its normal class. This is done in PlugInEditor.cpp.
+```C++
+//R1.00 Override the default Juce drawing routines and use ours.
+slider->setLookAndFeel(&myLookAndFeel);
+```
+In this app we have a dereferenced slider being used. If the slider is normal you would just do MySlider.setLookAndFeel(&myLookAndFeel). Assuming your Slider control is named MySlider.
+
+DRAWING A KNOB USING PATHS  
+Our Slider control will use the PATH method of drawing a shape. This shape can be draw or filled in. Step one is to define the PATH: 
+```C++
+float Kpts[32];
+juce::Path pathKnob;
+
+ //R1.00 Define the Path points to make a knob (Style 3).
+ Kpts[0] = -2.65325243300477f;
+ Kpts[1] = 8.60001462363607f;
+ Kpts[2] = 0.0f;
+ Kpts[3] = 10.0f;
+ Kpts[4] = 2.65277678639377f;
+ Kpts[5] = 8.60016135439157f;
+ Kpts[6] = 7.81826556234706f;
+ Kpts[7] = 6.23495979109873f;
+ Kpts[8] = 8.3778301945593f;
+ Kpts[9] = 3.28815468479365f;
+ Kpts[10] = 9.74931428347318f;
+ Kpts[11] = -2.22505528067641f;
+ Kpts[12] = 7.79431009355225f;
+ Kpts[13] = -4.4998589050713f;
+ Kpts[14] = 4.3390509473009f;
+ Kpts[15] = -9.00958583269659f;
+ Kpts[16] = 1.34161181197136f;
+ Kpts[17] = -8.89944255254108f;
+ Kpts[18] = -4.33855264588318f;
+ Kpts[19] = -9.00982579958681f;
+ Kpts[20] = -6.12133095297134f;
+ Kpts[21] = -6.59767439058605f;
+ Kpts[22] = -9.74919120703023f;
+ Kpts[23] = -2.22559448434896f;
+ Kpts[24] = -8.97486228392824f;
+ Kpts[25] = .672195644527914f;
+ Kpts[26] = -7.81861038843018f;
+ Kpts[27] = 6.23452737534543f;
+ Kpts[28] = -5.07025014121689f;
+ Kpts[29] = 7.4358969536627f;
+ Kpts[30] = -2.65325243300477f;
+ Kpts[31] = 8.60001462363607f;
+
+ //R1.00 Create the actual PATH for our KNOB style 3.
+ pathKnob.startNewSubPath(Kpts[0], Kpts[1]);
+ for (int t = 0; t < 32; t += 2)
+ {
+   pathKnob.lineTo(Kpts[t], Kpts[t + 1]);
+ }
+ pathKnob.closeSubPath();
 ```
 
 
