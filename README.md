@@ -208,7 +208,7 @@ void MakoBiteAudioProcessorEditor::timerCallback()
 ```
 We check to see if clipping is true. We then reset the varible so it can be ready to flag the next clip.
 
-We are using a flag internally called STATE_Clip. The sole purpose is to not forcing the screen to redraw twice a second. It gets set to true which forces a redraw (labInfo2.setText). 
-Then it is set to false so we dont setText agin until necessary. This makes the code hard to read but is a very important thing to remember. You end goal is to make your VST run as
-fast as possible. Try not to do too much.
+We are using a flag internally called STATE_Clip. The sole purpose of this var is stop the screen from redrawing everytime this func gets called (twice a second). It gets set to true which forces a redraw (labInfo2.setText). 
+Then it is set to false so we dont setText again until necessary. This makes the code hard to read but is a very important thing to remember. Your end goal is to make the VST run as
+fast as possible. Try not to do too much. You dont want your CPU busy drawing dumb stuff and then having your audio glitch out. 
 
