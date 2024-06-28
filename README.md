@@ -151,6 +151,7 @@ juce::Path pathKnob;
  pathKnob.closeSubPath();
 ```
 The knob coordinates were based on a circle size of 10. Using a circle of 1 or unity, would make the scaling easier. Too late we got 10.
+Even indexes are X coordinates and Odd indexes are Y coordinates. So we have 16 actual points.
 
 Now we can draw a weird knob shape. 
 ```C++
@@ -162,7 +163,7 @@ ColGrad = juce::ColourGradient(juce::Colour(0xFFC0C0C0), 0.0f, y, juce::Colour(0
 g.setGradientFill(ColGrad);
 g.strokePath(pK, juce::PathStrokeType(2.0f));
 ```
-We are scaling our knobs by 11 (circle is based on 10) to make the knobs a little smaller than normal. 
+We are scaling our knobs to be 1/11th normal size (our coors are based on 10) to make the knobs a little smaller than normal. Should be 1/10, which is a little too big.
 We then apply a rotation to the coordinates of the path. Followed by a translation (centering the knob in its position).
 This part only draws the outline of the knob, it does not fill it in. The color used is a gradient starting at a lite grey fading to black. 
 The path is drawn with strokeParth and is set to be 2 pixels wide.
