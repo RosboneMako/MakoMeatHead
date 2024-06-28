@@ -101,7 +101,9 @@ slider->setLookAndFeel(&myLookAndFeel);
 In this app we have a dereferenced slider being used. If the slider is normal you would just do MySlider.setLookAndFeel(&myLookAndFeel). Assuming your Slider control is named MySlider.
 
 DRAWING A KNOB USING PATHS  
-Our Slider control will use the PATH method of drawing a shape. This shape can be draw or filled in. Step one is to define the PATH: 
+Our Slider control will use the PATH method of drawing a shape. This shape can be drawn or filled in. All of this code resides on OUR new Slider class of course.
+
+Step one is to define the PATH: 
 ```C++
 float Kpts[32];
 juce::Path pathKnob;
