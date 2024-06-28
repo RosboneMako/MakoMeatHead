@@ -168,5 +168,47 @@ We then apply a rotation to the coordinates of the path. Followed by a translati
 This part only draws the outline of the knob, it does not fill it in. The color used is a gradient starting at a lite grey fading to black. 
 The path is drawn with strokeParth and is set to be 2 pixels wide.
 
+JUCE TIMER OVERRIDE  
+To have information from the processor displayed on the UI, we need a timer in the editor. This is done by adding  it to the editor def.
+```C++
+class MakoBiteAudioProcessorEditor  : public juce::AudioProcessorEditor , public juce::Slider::Listener, public juce::Timer
+```
+We then need to override the actual function so that our function gets called instead.
+```C++
+//R1.00 Override the TIMER so we can capture it and executes our UI code.
+void timerCallback() override;
+```
+We then tell the editor how often to call our timer. In this case we set it to be clalled twice a second. More than often enough for our simple CLIPPING warning.
+If you were making a VU meter, etc you may want this to be set to 10 or more. Remember, this is all wasting your CPU usage while you are trying to record in the DAW. 
+So try to keep it to a minimum. 
+```C++
+//R1.00 Start our Timer so we can tell the user they are clipping. Could draw VU Meters here, etc.
+startTimerHz(2);  //R1.00 have our Timer get called twice per second.
+```
+In our example we are watching for a public variable in the processor that gets set if we are clipping.
+```C++
+//R1.00 This func gets called twice a second to monitor processor.
+//R1.00 Could be used to draw VU meters, etc. 
+void MakoBiteAudioProcessorEditor::timerCallback()
+{
+    //R1.00 Check if processor audio is clipping.
+    //R1.00 Track the Label stats so we are not redrawing the control twice a second.
+    if (audioProcessor.AudioIsClipping)
+    {
+        audioProcessor.AudioIsClipping = false;
+        STATE_Clip = true;
+        labInfo2.setText("CLIPPING", juce::sendNotification);
+    }
+    else
+    {
+        if (STATE_Clip) labInfo2.setText("", juce::sendNotification);
+        STATE_Clip = false;
+    }
+}
+```
+We check to see if clipping is true. We then reset the varible so it can be ready to flag the next clip.
 
+We are using a flag internally called STATE_Clip. The sole purpose is to not forcing the screen to redraw twice a second. It gets set to true which forces a redraw (labInfo2.setText). 
+Then it is set to false so we dont setText agin until necessary. This makes the code hard to read but is a very important thing to remember. You end goal is to make your VST run as
+fast as possible. Try not to do too much.
 
