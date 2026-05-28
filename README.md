@@ -1,16 +1,17 @@
 # Rosbone MeatHead
 * JUCE VST High Gain Amp Sim
-* Demo JUCE program. Sample code.
+* Demo JUCE 8 program. Sample code.
 * Tested on Windows only.
 * Written in Visual C++ 2022.
 * Written for new programmers, not complicated.
-* Version: 2.00
-* Posted: May 9, 2026
+* Version: 2.01
+* Posted: May 28, 2026
 
 VERSION
 ------------------------------------------------------------------
 1.00 - Initial release.</br> 
 2.00 - Switch to IR based amp definitions.</br>
+2.01 - Removed incorrect paramater setting code.</br>
 
 DISCLAIMER
 ------------------------------------------------------------------  
